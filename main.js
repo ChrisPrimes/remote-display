@@ -88,7 +88,6 @@ app.whenReady().then(() => {
     if (fs.existsSync(temp_file)) {
       let timestamp = parseInt(fs.readFileSync(temp_file))
       event.returnValue = timestamp
-      //fs.unlinkSync(temp_file)
     } else {
       event.returnValue = getCurrentTimestamp()
     }
