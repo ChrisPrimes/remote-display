@@ -6,5 +6,5 @@ This app has been tested and optimized for the following operating systems.
 | OS | Notes |
 |--|--|
 | Raspberry Pi OS (recommended) | Tested with the AppImage build |
-| macOS | Tested on versions as low as El Capital |
+| macOS | Tested on versions as low as El Capitan |
 | Windows | Not tested yet |
