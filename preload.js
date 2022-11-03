@@ -46,7 +46,7 @@ function connectToServer() {
     numberImages = data.images.length
     data.images.forEach(element => {
       let localPath = path.join(CACHE_DIR, "" + DEPLOYMENT_ID, element.filename)
-      let url = SERVER_URL + element.path
+      let url = element.path
       if (!fs.existsSync(localPath)) {
         let directory = path.dirname(localPath)
         if (!fs.existsSync(directory)) {
