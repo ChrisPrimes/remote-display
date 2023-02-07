@@ -11,11 +11,11 @@
   "author": "Chris Primes",
   "license": "UNLICENSED",
   "devDependencies": {
-    "electron": "^20.1.1"
+    "electron": "^23.0.0"
   },
   "dependencies": {
     "electron-log": "^4.4.8",
-    "node-fetch": "^2.6.7"
+    "node-fetch": "^3.3.0"
   },
   "build": {
     "appId": "com.chrisprimes.signage"
