@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
-    "make": "electron-builder"
+    "make": "electron-builder --publish=never"
   },
   "author": "Chris Primes",
   "license": "UNLICENSED",
