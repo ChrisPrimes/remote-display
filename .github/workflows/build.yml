@@ -1,0 +1,27 @@
+name: Build app
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@master
+      with:
+        node-version: 18
+    - name: install dependencies
+      run: npm ci
+    - name: build and package app
+      run: npm run make
+    - uses: actions/upload-artifact@v3
+      with:
+        name: remote-display-bundle
+        path: |
+          dist/*.dmg
+          dist/*.AppImage

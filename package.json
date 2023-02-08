@@ -6,18 +6,42 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "start": "electron .",
+    "make": "electron-builder"
   },
   "author": "Chris Primes",
   "license": "UNLICENSED",
   "devDependencies": {
-    "electron": "^23.0.0"
+    "electron": "^23.0.0",
+    "electron-builder": "^23.6.0"
   },
   "dependencies": {
     "electron-log": "^4.4.8",
     "node-fetch": "^3.3.0"
   },
   "build": {
-    "appId": "com.chrisprimes.signage"
+    "appId": "com.chrisprimes.signage",
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ]
+    }
   }
 }
