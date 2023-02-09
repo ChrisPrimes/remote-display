@@ -30,7 +30,7 @@ jobs:
       uses: reggionick/s3-deploy@v3
       with:
         folder: dist
-        files-to-include: "*.AppImage"
+        filesToInclude: "*.AppImage"
         bucket: ${{ secrets.S3_BUCKET }}
         bucket-region: ${{ secrets.S3_BUCKET_REGION }}
         delete-removed: false
