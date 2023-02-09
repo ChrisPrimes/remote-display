@@ -24,7 +24,10 @@
     "mac": {
       "target": [
         {
-          "target": "dmg",
+          "target": [
+            "dmg",
+            "zip"
+          ],
           "arch": [
             "universal"
           ]
