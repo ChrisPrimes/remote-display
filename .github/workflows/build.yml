@@ -22,7 +22,7 @@ jobs:
         path: |
           dist/*.dmg
           dist/*.AppImage
-    - name: Configure AWS Credentials
+    - name: Configure AWS credentials
       if: ${{ github.ref == 'refs/heads/ElectronUpgrade' && matrix.os == 'ubuntu-latest' }}
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -32,4 +32,4 @@ jobs:
     - name: Deploy to production S3
       if: ${{ github.ref == 'refs/heads/ElectronUpgrade' && matrix.os == 'ubuntu-latest' }}
       run: |
-        aws s3 sync dist s3://${{ secrets.S3_BUCKET }}/dist
+        aws s3 cp dist s3://${{ secrets.S3_BUCKET }}/dist --recursive --exclude "*" --include "*.AppImage"
