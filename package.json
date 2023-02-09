@@ -10,7 +10,7 @@
     "make": "electron-builder --publish=never"
   },
   "author": "Chris Primes",
-  "license": "UNLICENSED",
+  "license": "GPL-3.0-or-later",
   "devDependencies": {
     "electron": "^23.0.0",
     "electron-builder": "^23.6.0"
