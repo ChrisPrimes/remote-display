@@ -1,7 +1,7 @@
 {
   "name": "com.chrisprimes.signage",
   "productName": "Remote Display",
-  "version": "2.0.5",
+  "version": "2.1.0",
   "description": "",
   "main": "main.js",
   "scripts": {
@@ -12,12 +12,12 @@
   "author": "Chris Primes",
   "license": "GPL-3.0-or-later",
   "devDependencies": {
-    "electron": "^23.0.0",
+    "electron": "^23.1.2",
     "electron-builder": "^23.6.0"
   },
   "dependencies": {
     "electron-log": "^4.4.8",
-    "node-fetch": "^3.3.0"
+    "node-fetch": "^2.6.7"
   },
   "build": {
     "appId": "com.chrisprimes.signage",
@@ -43,7 +43,8 @@
           "target": "AppImage",
           "arch": [
             "x64",
-            "arm64"
+            "arm64",
+            "armv7l"
           ]
         }
       ]
