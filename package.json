@@ -1,23 +1,53 @@
 {
   "name": "com.chrisprimes.signage",
   "productName": "Remote Display",
-  "version": "2.0.5",
+  "version": "2.1.0",
   "description": "",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "start": "electron .",
+    "make": "electron-builder --publish=never"
   },
   "author": "Chris Primes",
-  "license": "UNLICENSED",
+  "license": "GPL-3.0-or-later",
   "devDependencies": {
-    "electron": "^20.1.1"
+    "electron": "^23.1.2",
+    "electron-builder": "^23.6.0"
   },
   "dependencies": {
     "electron-log": "^4.4.8",
     "node-fetch": "^2.6.7"
   },
   "build": {
-    "appId": "com.chrisprimes.signage"
+    "appId": "com.chrisprimes.signage",
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "universal"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "universal"
+          ]
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64",
+            "arm64",
+            "armv7l"
+          ]
+        }
+      ]
+    }
   }
 }
