@@ -11,6 +11,7 @@ const DEPLOYMENT_ID = ipcRenderer.sendSync('get-deployment-id', '')
 const CACHE_DIR = ipcRenderer.sendSync('get-app-support', '')
 const PASSWORD = ipcRenderer.sendSync('get-deployment-password', '')
 const LAST_RESTART_TIMESTAMP = ipcRenderer.sendSync('get-last-restart', '')
+const CHECK_FOR_RESTART_INTERVAL = 900000
 
 let retryCount = 0
 let numberImages = -1
@@ -162,18 +163,18 @@ function checkForRestart() {
         })
       } else {
         log.debug("Heartbeat, no restart needed.")
-        setTimeout(checkForRestart, 60000)
+        setTimeout(checkForRestart, CHECK_FOR_RESTART_INTERVAL)
       }
 
     } else {
       log.debug("Heartbeat result was not success.")
-      setTimeout(checkForRestart, 60000)
+      setTimeout(checkForRestart, CHECK_FOR_RESTART_INTERVAL)
     }
   })
 
   httpRequest.addEventListener("error", function () {
     log.debug("Heartbeat connection error.")
-    setTimeout(checkForRestart, 60000)
+    setTimeout(checkForRestart, CHECK_FOR_RESTART_INTERVAL)
   })
 
   httpRequest.open("GET", SERVER_URL + "/control?deployment_id=" + DEPLOYMENT_ID + "&password=" + PASSWORD)
