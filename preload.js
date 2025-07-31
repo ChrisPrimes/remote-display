@@ -1,8 +1,7 @@
 const fs = require('fs')
-const fetch = require('node-fetch')
 const path = require('path')
 const { ipcRenderer, webFrame } = require('electron')
-const log = require('electron-log')
+const log = require('electron-log/renderer')
 
 const PLAYER_FILE_NAME = 'player.json'
 
@@ -15,9 +14,6 @@ const CHECK_FOR_RESTART_INTERVAL = 900000
 
 let retryCount = 0
 let numberImages = -1
-
-log.transports.file.resolvePath = () => path.join(CACHE_DIR, 'log.txt')
-log.transports.file.level = 'info'
 
 window.addEventListener('DOMContentLoaded', () => {
   log.info('DEPLOYMENT ID: ' + DEPLOYMENT_ID)

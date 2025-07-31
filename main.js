@@ -1,11 +1,14 @@
 const { app, BrowserWindow, powerSaveBlocker, ipcMain, dialog } = require('electron')
 const path = require('path')
 const fs = require('fs')
-const { config } = require('process')
 const execFile = require('child_process').execFile
+const log = require('electron-log/main')
 
 const RESTMP_FILE_NAME = 'restmp'
 const CONFIG_FILE_NAME = 'config.json'
+
+// Initialize logging
+log.initialize()
 
 app.disableHardwareAcceleration()
 powerSaveBlocker.start('prevent-display-sleep')
@@ -40,6 +43,10 @@ app.whenReady().then(() => {
   }
 
   let config = JSON.parse(fs.readFileSync(config_file))
+
+  // Configure logging
+  log.transports.file.resolvePathFn = () => path.join(app_data, 'log.txt')
+  log.transports.file.level = 'info'
 
   ipcMain.on('get-app-support', (event, arg) => {
     event.returnValue = app_data

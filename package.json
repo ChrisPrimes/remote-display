@@ -4,6 +4,9 @@
   "version": "2.1.1",
   "description": "",
   "main": "main.js",
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
@@ -12,12 +15,11 @@
   "author": "Chris Primes",
   "license": "GPL-3.0-or-later",
   "devDependencies": {
-    "electron": "^23.1.2",
-    "electron-builder": "^23.6.0"
+    "electron": "^37.2.5",
+    "electron-builder": "^26.0.12"
   },
   "dependencies": {
-    "electron-log": "^4.4.8",
-    "node-fetch": "^2.6.7"
+    "electron-log": "^5.4.2"
   },
   "build": {
     "appId": "com.chrisprimes.signage",
