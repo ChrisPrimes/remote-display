@@ -88,9 +88,7 @@ function nextSlide() {
     showSlide()
 }
 
-function showError(message) {
-    console.error(message)
-    
+function showError(message) {    
     const helpText = document.querySelector('.help-text')
     if (helpText) {
         helpText.style.display = 'flex'
