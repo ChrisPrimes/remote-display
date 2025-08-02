@@ -1,23 +1,17 @@
-// Modern renderer script using secure contextBridge API
 let config = null
 let slideshowData = null
 let currentSlideIndex = 0
 let slideshowTimer = null
 
-// Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        // Check if electronAPI is available
         if (!window.electronAPI) {
-            console.error('electronAPI not available! Check preload script.')
+            console.error('electronAPI not available!')
             showError('electronAPI not available')
             return
         }
         
-        // Get configuration from main process
         config = await window.electronAPI.getConfig()
-
-        // Initialize slideshow - this will wait for main process to be ready
         slideshowData = await window.electronAPI.initializeSlideshow()
         startSlideshow()
 
@@ -29,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 function startSlideshow() {
     if (!slideshowData || !slideshowData.images || slideshowData.images.length === 0) {
-        showError('No images available for slideshow')
+        showError('No media available')
         return
     }
 

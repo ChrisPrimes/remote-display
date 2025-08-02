@@ -22,6 +22,8 @@ app.disableHardwareAcceleration()
 powerSaveBlocker.start('prevent-display-sleep')
 
 const createWindow = () => {
+  const isDevMode = process.env.NODE_ENV === 'development';
+
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
@@ -30,13 +32,12 @@ const createWindow = () => {
       contextIsolation: true,
       preload: path.join(__dirname, 'preload.js')
     },
-    fullscreen: true
+    fullscreen: isDevMode ? false : true
   })
 
   mainWindow.loadFile('index.html')
 
-  // Only enable dev tools in development
-  if (process.env.NODE_ENV === 'development') {
+  if (isDevMode) {
     mainWindow.webContents.openDevTools()
   }
 
@@ -69,16 +70,14 @@ app.whenReady().then(async () => {
   log.transports.file.resolvePathFn = () => path.join(appData, 'log.txt')
   log.transports.file.level = 'info'
 
-  // Ensure cache directory exists
-  await ensureCacheDirectory()
+  await createCacheDirectory()
 
-  // Register IPC handlers
   registerIpcHandlers()
 
-  const mainWindow = createWindow()
-
-  // Start slideshow initialization in background
+  // Start the initialization process, but don't wait for it to complete
   initializationPromise = initializeSlideshow()
+
+  createWindow()
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
@@ -104,7 +103,7 @@ function getServerUrl() {
   return config.tenant || defaultUrl
 }
 
-async function ensureCacheDirectory() {
+async function createCacheDirectory() {
   try {
     await fs.mkdir(appData, { recursive: true })
     const deploymentDir = path.join(appData, String(config.deployment_id))
@@ -121,18 +120,15 @@ function registerIpcHandlers() {
     return {
       deploymentId: String(config.deployment_id),
       serverUrl: getServerUrl(),
-      cacheDir: appData,
-      lastRestartTimestamp: await getLastRestartTimestamp()
+      cacheDir: appData
     }
   })
 
   // Initialize slideshow - called when renderer is ready
   ipcMain.handle('initialize-slideshow', async () => {
     // Wait for initialization to complete if it's still running
-    if (initializationPromise) {
-      await initializationPromise
-    }
-    
+    await initializationPromise
+
     if (!slideshowData) {
       throw new Error('Slideshow initialization failed')
     }
@@ -255,10 +251,7 @@ async function connectToServer(retryCount = 0) {
       JSON.stringify(data, null, 2)
     )
     
-    // Download missing images
     await cacheImages(data.images)
-    
-    // Cleanup old images
     await cleanupCache(data.images)
     
     slideshowData = data
@@ -335,14 +328,11 @@ async function checkForRestart() {
 
 async function initializeSlideshow() {
   try {
-    // Connect to server and cache images
     await connectToServer()
     
     // Start restart checking
     setTimeout(checkForRestart, CHECK_FOR_RESTART_INTERVAL)
-    
-    log.info('Slideshow initialization complete')
-    
+
   } catch (error) {
     log.error('Failed to initialize slideshow:', error)
     throw error
